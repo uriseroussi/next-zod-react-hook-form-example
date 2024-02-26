@@ -49,7 +49,7 @@ export const formSchema = z
       },
       { message: 'Phone number must be xxx-xxx-xxxx' }
     ),
-    file: z
+    profileImage: z
       .custom<FileList>()
       .transform((val) => {
         if (val instanceof File) return val;

@@ -27,8 +27,8 @@ export default function Form() {
     const formData = new FormData();
 
     for (const field of Object.keys(data) as Array<keyof typeof data>) {
-      if (field === 'file') {
-        formData.append('file', data.file[0]);
+      if (field === 'profileImage') {
+        formData.append('profileImage', data.profileImage[0]);
       } else {
         formData.append(`${field}`, `${data[field]}`);
       }
@@ -103,9 +103,9 @@ export default function Form() {
 
       <Input
         label="Profile Image"
-        {...register('file')}
+        {...register('profileImage')}
         type="file"
-        error={errors.file?.message}
+        error={errors.profileImage?.message}
         className="col-span-full"
         required
       />
