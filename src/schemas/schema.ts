@@ -17,9 +17,11 @@ export const formSchema = z
     }),
     firstName: z
       .string()
+      .trim()
       .min(2, { message: 'First name must be more than 1 character' }),
     middleName: z
       .string()
+      .trim()
       .refine(
         (middleName) => {
           if (middleName !== '' && middleName.length < 2) return false;
@@ -30,25 +32,29 @@ export const formSchema = z
       .transform((middleName) => (middleName === '' ? null : middleName)),
     lastName: z
       .string()
+      .trim()
       .min(2, { message: 'Last name must be more than 1 character' }),
-    email: z.string().email(),
+    email: z.string().trim().email(),
     birthDate: z.string().pipe(z.coerce.date()),
-    website: z.string().url(),
-    phone: z.string().refine(
-      (phone) => {
-        const sections = phone.split('-');
-        if (
-          sections.length !== 3 ||
-          sections[0].length !== 3 ||
-          sections[1].length !== 3 ||
-          sections[2].length !== 4
-        ) {
-          return false;
-        }
-        return true;
-      },
-      { message: 'Phone number must be xxx-xxx-xxxx' }
-    ),
+    website: z.string().trim().url(),
+    phone: z
+      .string()
+      .trim()
+      .refine(
+        (phone) => {
+          const sections = phone.split('-');
+          if (
+            sections.length !== 3 ||
+            sections[0].length !== 3 ||
+            sections[1].length !== 3 ||
+            sections[2].length !== 4
+          ) {
+            return false;
+          }
+          return true;
+        },
+        { message: 'Phone number must be xxx-xxx-xxxx' }
+      ),
     profileImage: z
       .custom<FileList>()
       .transform((val) => {
